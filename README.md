@@ -94,8 +94,10 @@ Default `.env` configuration (no API keys needed!):
 OLLAMA_BASE_URL=http://localhost:11434
 OLLAMA_MODEL_NAME=llama3.2:1b
 EMBEDDING_MODEL=sentence-transformers/all-MiniLM-L6-v2
-TOP_K=5
+TOP_K=4
+SIMILARITY_THRESHOLD=0.20
 ```
+
 
 ### Step 3: Install Backend Dependencies
 ```bash
