@@ -1,0 +1,1 @@
+# GitLab-product-documentation-helper
