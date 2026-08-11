@@ -113,7 +113,23 @@ npm install
 
 ---
 
-## 8. Running the Application
+## 8. Render Cloud Deployment (Production)
+
+This repository includes a native [`render.yaml`](render.yaml) Blueprint manifest for deployment on [Render](https://render.com).
+
+### Render Setup Notes
+1. Push this repository to GitHub.
+2. Create a new **Blueprint** in the Render dashboard and connect this repository.
+3. Render will provision:
+   - **`gitlab-rag-backend`** as the Python FastAPI service with the bundled FAISS index and local Ollama startup script.
+   - **`gitlab-rag-frontend`** as the Next.js service that calls the backend through `NEXT_PUBLIC_API_URL`.
+4. The backend uses the Render-provided `PORT` and binds to `0.0.0.0`, while the frontend starts with `npx next start -H 0.0.0.0 -p $PORT`.
+5. No `.env`, API keys, or secrets are included in the repository.
+
+---
+
+## 9. Running Locally
+
 
 ### Start Backend API Server (Port 8000)
 ```bash

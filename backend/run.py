@@ -5,6 +5,9 @@ from pathlib import Path
 import os
 import ctypes
 
+# Ensure Render-provided PORT is honored when the app is launched via the entrypoint script.
+PORT = int(os.environ.get("PORT", "8000"))
+
 # Fix Windows PyTorch / OpenMP DLL initialization issue (WinError 1114)
 os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
@@ -31,4 +34,5 @@ if str(root_dir) not in sys.path:
 import uvicorn
 
 if __name__ == "__main__":
-    uvicorn.run("backend.app.main:app", host="0.0.0.0", port=8000, reload=False)
+    uvicorn.run("backend.app.main:app", host="0.0.0.0", port=PORT, reload=False)
+
