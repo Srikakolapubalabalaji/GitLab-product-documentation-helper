@@ -1,0 +1,44 @@
+services:
+  # FastAPI Backend Web Service (Python 3.10+ & Ollama container)
+  - type: web
+    name: gitlab-rag-backend
+    env: python
+    region: oregon
+    plan: starter
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: bash backend/render_start.sh
+    healthCheckPath: /api/health
+    envVars:
+      - key: OLLAMA_BASE_URL
+        value: http://127.0.0.1:11434
+      - key: OLLAMA_MODEL_NAME
+        value: llama3.2:1b
+      - key: EMBEDDING_MODEL
+        value: sentence-transformers/all-MiniLM-L6-v2
+      - key: TOP_K
+        value: "4"
+      - key: SIMILARITY_THRESHOLD
+        value: "0.20"
+      - key: CHUNK_SIZE
+        value: "500"
+      - key: CHUNK_OVERLAP
+        value: "100"
+      - key: PYTHONUNBUFFERED
+        value: "1"
+
+  # Next.js Frontend Web Service
+  - type: web
+    name: gitlab-rag-frontend
+    env: node
+    region: oregon
+    plan: starter
+    buildCommand: cd frontend && npm install && npm run build
+    startCommand: cd frontend && npx next start -H 0.0.0.0 -p $PORT
+    healthCheckPath: /
+    envVars:
+      - key: NEXT_PUBLIC_API_URL
+        fromService:
+          type: web
+          name: gitlab-rag-backend
+          property: url
+        suffix: /api

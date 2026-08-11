@@ -25,7 +25,11 @@ wheels/
 venv/
 
 # Vectorstore Local Persistence
-backend/vectorstore_db/
+backend/vectorstore_db/*
+!backend/vectorstore_db/
+!backend/vectorstore_db/faiss_index/
+!backend/vectorstore_db/faiss_index/index.faiss
+!backend/vectorstore_db/faiss_index/index.pkl
 
 # Next.js
 frontend/.next/
